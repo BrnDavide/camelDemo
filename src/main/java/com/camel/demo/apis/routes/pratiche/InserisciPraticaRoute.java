@@ -38,6 +38,7 @@ public class InserisciPraticaRoute extends RouteBuilder {
                 .enrich("{{camel.endpoint.sql.recuperaPratica}}")
                 .convertBodyTo(Map.class)
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
+                .to(Constants.DIRECT_SCRIVI_FILE)
         .end();
     }
 }

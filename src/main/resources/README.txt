@@ -1,5 +1,19 @@
+## DOCUMENTAZIONE ROUTES - Camel Contract-First ##
 
-
+1. Operazioni CRUD su tabella CLIENTI
+2. Operazioni CRUD su Tabella PRATICHE
+    2.1 Check su esistenza cliente previo inserimento nuova pratica
+    2.2 Set dello stato pratica = "RICEVUTA"
+    2.3 Elaborazione pratica
+        2.3.1 Prelievo cliente e aggregazione
+        2.3.2 Chiamata servizio mockato -> Risposta "OK" per cod  clienti pari / "KO" per i dispari
+        2.3.3 Set dello stato pratica in un enum previsto
+        2.3.4 Chiamata aggiornamento pratica + inserimento esito
+3. Scrittura file di record ESITO_OPERAZIONI
+4. Dockerizzazione (Dockerfile + docker-compose.yml)
+5. Integrazione Wiremock: wiremock/mappings/verifica-ok.json/verifica-ko.json
+6. Info DB: demo/db/init.sql
+7. Contratti in Apis.json
 
 
 
