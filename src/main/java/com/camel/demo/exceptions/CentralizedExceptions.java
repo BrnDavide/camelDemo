@@ -18,7 +18,7 @@ public class CentralizedExceptions extends RouteConfigurationBuilder {
                 .process(new GenerateMessagePredicateValidationException())
                 .removeHeaders("*")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
-                .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"));
+                .setHeader(Exchange.CONTENT_TYPE, constant("application/json"));
 
         routeConfiguration()
                 .onException(Exception.class)
@@ -26,7 +26,7 @@ public class CentralizedExceptions extends RouteConfigurationBuilder {
                 .to("{{camel.endpoint.log.error}}")
                 .removeHeaders("*")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
-                .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
+                .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
                 .setBody(constant("Errore"));
     }
 }

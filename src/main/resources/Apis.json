@@ -75,6 +75,16 @@
               }
             }
           },
+          "400": {
+            "description": "Dati forniti non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Nessuna pratica trovata"
           }
@@ -93,7 +103,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Aggiornamento - OK",
             "content": {
               "application/json": {
@@ -204,7 +214,7 @@
         "operationId": "recuperaCliente",
         "description": "Recuperare un cliente da DB",
         "responses": {
-          "200": {
+          "204": {
             "description": "Operazione GET - OK",
             "content": {
               "application/json": {
@@ -214,7 +224,17 @@
               }
             }
           },
-          "204": {
+          "400": {
+            "description": "Dati forniti non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          },
+          "404": {
             "description": "Nessun cliente trovato"
           }
         }

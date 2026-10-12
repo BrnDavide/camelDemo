@@ -1,6 +1,7 @@
 package com.camel.demo.apis.routes.pratiche;
 
 import com.camel.demo.beans.request.PraticaUpdateRequest;
+import com.camel.demo.beans.response.Errore;
 import com.camel.demo.constants.Constants;
 import com.camel.demo.predicates.ValidaCodicePraticaPredicate;
 import org.apache.camel.Exchange;
@@ -25,9 +26,10 @@ public class AggiornaPraticaRoute extends RouteBuilder {
                 .choice()
                     .when(header(SqlConstants.SQL_UPDATE_COUNT).isEqualTo(0))
                         .log(LoggingLevel.WARN, "Pratica ${header.codicePratica} non aggiornata")
-                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
+                        .setBody(constant(new Errore("404", "Pratica non aggiornata")))
                     .otherwise()
-                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(204))
+                        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
         .end();
 
     }

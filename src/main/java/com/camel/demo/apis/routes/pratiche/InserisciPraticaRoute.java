@@ -34,7 +34,10 @@ public class InserisciPraticaRoute extends RouteBuilder {
                 .setProperty("codicePratica", simple("${body.codicePratica}"))// mi prendo il codice della pratica
                 .log(LoggingLevel.INFO,"Entrato in rotta Elabora Pratica con body: ${body} ")
                 .to(Constants.DIRECT_ELABORA_PRATICA)//qui posso chiamare una rotta di elab e inserire il servizio mockato. es: codice pratica pari ok/dispari ko
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(204))
+                .setHeader("codicePratica", exchangeProperty("codicePratica"))
+                .enrich("{{camel.endpoint.sql.recuperaPratica}}")
+                .convertBodyTo(Map.class)
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201))
         .end();
     }
 }
