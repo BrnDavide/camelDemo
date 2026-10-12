@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - ENV_JDBC_URL=jdbc:postgresql://db:5432/Camel
+      - ENV_JDBC_USERNAME=postgres
+      - ENV_JDBC_PASSWORD=admin
+      - ENV_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - ENV_MAXIMUM_POOL_SIZE=5
+      - ENV_MINIMUM_IDLE=1
+      - ENV_OUTPUT_DIRECTORY=output
+    volumes:
+      - ./output:/app/output
+    depends_on:
+      - db
+      - wiremock
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=Camel
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  wiremock:
+    image: wiremock/wiremock
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+volumes:
+  pgdata:

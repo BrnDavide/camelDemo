@@ -1,0 +1,510 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Camel Contract-First - OpenAPI 3.0.3",
+    "description": "Contract First Demo",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082"
+    }
+  ],
+  "paths": {
+    "/pratiche": {
+      "post": {
+        "description": "Creare una pratica",
+        "operationId": "inserisciPratica",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PraticaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pratica in elaborazione",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PraticaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dati forniti non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pratiche/{codicePratica}": {
+      "parameters": [
+        {
+          "name": "codicePratica",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "recuperaPratica",
+        "description": "Recuperare una pratica da DB",
+        "responses": {
+          "204": {
+            "description": "Operazione GET - OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PraticaResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nessuna pratica trovata"
+          }
+        }
+      },
+      "put": {
+        "operationId": "aggiornaPratica",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PraticaUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Aggiornamento - OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PraticaResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nessuna pratica trovata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dati non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Cancella Pratica",
+        "operationId": "eliminaPratica",
+        "parameters": [
+          {
+            "name": "codicePratica",
+            "in": "path",
+            "description": "Pratica da cancellare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Pratica eliminata"
+          },
+          "404": {
+            "description": "Pratica inesistente"
+          }
+        }
+      }
+    },
+    "/clienti": {
+      "post": {
+        "description": "Inserire un cliente",
+        "operationId": "inserisciCliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cliente inserito",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dati forniti non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clienti/{codiceCliente}": {
+      "parameters": [
+        {
+          "name": "codiceCliente",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "recuperaCliente",
+        "description": "Recuperare un cliente da DB",
+        "responses": {
+          "200": {
+            "description": "Operazione GET - OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Nessun cliente trovato"
+          }
+        }
+      },
+      "delete": {
+        "description": "Cancella Cliente",
+        "operationId": "eliminaCliente",
+        "parameters": [
+          {
+            "name": "codiceCliente",
+            "in": "path",
+            "description": "Cliente da cancellare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cliente eliminato"
+          },
+          "404": {
+            "description": "Cliente inesistente"
+          }
+        }
+      },
+      "put": {
+        "operationId": "aggiornaCliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Aggiornamento - OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nessun cliente trovato",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dati non validi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Errore"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PraticaRequest": {
+        "type": "object",
+        "required": [
+          "codiceContraente",
+          "importo",
+          "descrizione",
+          "dataSottoscrizione"
+        ],
+        "properties": {
+          "codiceContraente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "importo": {
+            "type": "number",
+            "minimum": 0,
+            "example": 1500.50
+          },
+          "descrizione": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "dataSottoscrizione": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-10-07"
+          }
+        }
+      },
+      "PraticaUpdateRequest": {
+        "type": "object",
+        "required": [
+          "importo",
+          "dataSottoscrizione"
+        ],
+        "properties": {
+          "importo": {
+            "type": "number",
+            "minimum": 0
+          },
+          "descrizione": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "dataSottoscrizione": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "PraticaResponse": {
+        "type": "object",
+        "properties": {
+          "codicePratica": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codiceContraente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "importo": {
+            "type": "number"
+          },
+          "descrizione": {
+            "type": "string"
+          },
+          "dataSottoscrizione": {
+            "type": "string",
+            "format": "date"
+          },
+          "dataCancellazione": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "statoPratica": {
+            "type": "string",
+            "enum": [
+              "RICEVUTA",
+              "IN_ELABORAZIONE",
+              "COMPLETATA",
+              "ERRORE"
+            ]
+          },
+          "ultimoEsito": {
+            "$ref": "#/components/schemas/Esito"
+          }
+        }
+      },
+      "ClienteRequest": {
+        "type": "object",
+        "required": [
+          "nome",
+          "cognome",
+          "dataDiNascita",
+          "cf",
+          "email"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "cognome": {
+            "type": "string"
+          },
+          "dataDiNascita": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-10-07"
+          },
+          "cf": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ClienteUpdateRequest": {
+        "type": "object",
+        "required": [
+          "nome",
+          "cognome",
+          "dataDiNascita",
+          "cf",
+          "email"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "cognome": {
+            "type": "string"
+          },
+          "dataDiNascita": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-10-07"
+          },
+          "cf": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ClienteResponse": {
+        "type": "object",
+        "properties": {
+          "codiceCliente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "cognome": {
+            "type": "string"
+          },
+          "dataDiNascita": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-10-07"
+          },
+          "cf": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Esito": {
+        "type": "object",
+        "properties": {
+          "codiceEsito": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esito": {
+            "type": "string",
+            "enum": [
+              "OK",
+              "KO"
+            ]
+          },
+          "messaggioErrore": {
+            "type": "string"
+          },
+          "nomeFile": {
+            "type": "string"
+          },
+          "dataElaborazione": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Errore": {
+        "type": "object",
+        "properties": {
+          "codice": {
+            "type": "string"
+          },
+          "messaggio": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
+
+

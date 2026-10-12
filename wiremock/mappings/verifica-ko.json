@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/cliente/verifica/",
+    "queryParameters": {"codiceCliente": {"matches": ".*[13579]$"} }
+  },
+  "response": {
+    "status": 200,
+    "body": "KO",
+    "headers": { "Content-Type": "text/plain" }
+  }
+}
